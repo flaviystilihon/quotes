@@ -14,3 +14,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/', indexRouter);
 app.use("/quotes", quotesRouter);
+
+app.use(function(err, req, res, next) {
+    console.log("===== Error has occurred! ======")
+    console.log(err)
+    console.log("===== Error has occurred! ======")
+
+    res.status(500);
+    res.render('error', {error: err});
+})

@@ -3,9 +3,11 @@ const quotesRouter = express.Router();
 
 const quotesModule = require('../modules/quotes_module');
 
-quotesRouter.post("/add", (req, res) => {
+quotesRouter.post("/add", (req, res, next) => {
     quotesModule.addQuote(req.body).then(() => {
         res.redirect('/');
+    }).catch((err) => {
+        next(err);
     });
 })
 

@@ -6,12 +6,12 @@ var QuotesModule = {
 QuotesModule.DBconnect = function() {
     return new Promise((resolve, reject) => {
         if(!QuotesModule.db_connection) {
-            MongoClient.connect("mongodb://localhost:27017/", { useNewUrlParser: true }, (err, client) => {
-                if(err) reject(err);
-
-                QuotesModule.db_connection = client.db("quotes");
+            MongoClient.connect("mongodb://localhost:27017/", { useNewUrlParser: true }).then(function(connection) {
+                QuotesModule.db_connection = connection.db("quotes");
                 resolve(QuotesModule.db_connection);
-            })
+            }).catch((err) => {
+                reject(err);
+            });
         } else {
             resolve(QuotesModule.db_connection);
         }
